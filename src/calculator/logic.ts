@@ -11,10 +11,10 @@ const stateKeys = {
 }
 
 const calculatorFuncs = {
-  [operatorSymbols.add]: (x: number, y: number): number => x + y,
-  [operatorSymbols.subtract]: (x: number, y: number): number => x - y,
-  [operatorSymbols.multiply]: (x: number, y: number): number => x * y,
-  [operatorSymbols.divide]: (x: number, y: number): number =>  x /y 
+  [operatorSymbols.add]: (x: number, y: number): BigNumber => new BigNumber(x).plus(y),
+  [operatorSymbols.subtract]: (x: number, y: number): BigNumber => new BigNumber(x).minus(y),
+  [operatorSymbols.multiply]: (x: number, y: number): BigNumber => new BigNumber(x).times(y),
+  [operatorSymbols.divide]: (x: number, y: number): BigNumber => new BigNumber(x).div(y)
 }
 
 const calculate = (total: string | null, value: string | null, operator: string): string => {
@@ -24,7 +24,7 @@ const calculate = (total: string | null, value: string | null, operator: string)
   const calculationFunc = calculatorFuncs[operator]
   const newTotal = calculationFunc(firstOperand, secondOperand)
 
-  return newTotal.toString()
+  return newTotal.toNumber().toString()
 }
 
 const setOperator = (state: CalculatorState, operator: string): CalculatorState => ({
